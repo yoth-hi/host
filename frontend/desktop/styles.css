@@ -219,3 +219,8 @@ app-watch > #column #description {
 app-watch > #column > #content-row {
   min-height: 10px;
 }
+app-watch > #player-band {
+  width: 100%;
+  height: 100vh;
+  max-height: calc(100vh - 300px);
+}

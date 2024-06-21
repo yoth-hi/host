@@ -19,7 +19,10 @@ Initially, Yoth supports the following languages for content translation:
 - Japanese
 - English
 - Portuguese
-
+#### Supported device (web)
+ - Tv
+ - Mobile
+ - Desktop
 #### Site Information
 - **Name**: Yoth
 - **Host**: [yoth-eta.vercel.app](https://yoth-eta.vercel.app) (This will be updated upon acquiring a domain)

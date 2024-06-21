@@ -8,6 +8,8 @@ def renderContextPage(parsed_path, self_):
   context["pageId"] = getPageIdByPath(path)
   istv = context["pageId"] == "LAYOUT_TV"
   isembed = context["pageId"] == "EMBED"
+  iswatch = context["pageId"] == "WATCH"
+  context["iswatch"] = iswatch
   context["istv"] = istv
   context["path"] = path
   context["host"] = host
@@ -32,6 +34,8 @@ def getPageIdByPath(path):
     _id = "FEED_HOME"
   elif(path == "tv"):
     _id = "LAYOUT_TV"
+  elif(path == "watch"):
+    _id = "WATCH"
   print(path)
   return _id
 def toTextData(dataJson):
@@ -39,3 +43,10 @@ def toTextData(dataJson):
   if dataJson:
     text = json.dumps(dataJson)
   return text
+def isPageHtml(path):
+  return path == "/" or "/watch" == path or path == "/tv"
+def isPageApi(path):
+  if not path.startswith("/v1/"):
+    return False
+  path = path[3:]
+  return path == "/watchtime"

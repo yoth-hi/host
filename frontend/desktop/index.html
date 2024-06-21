@@ -10,10 +10,9 @@
         <link href="/s/player/jsbin/player.css" rel="stylesheet">
     </head>
     <body>
-      <style>body>#player{position:relative;z-index:500;max-width:1080px;margin:57px auto;padding-bottom:17%;width:95vh}
-        body>#player>div{position:absolute;inset:0}</style>
+      <style>body>#player{position:relative;z-index:500;max-width:1080px;margin:57px auto;padding-bottom:17%;width:95vh}body>#player>div{position:absolute;inset:0}</style>
       <div id="player"></div>
-      
+      {% if iswatch %}
         <script>
             const response = {
                             videoDetails: {
@@ -67,10 +66,11 @@
                             }
                         };
             (function(response, b){
-            //  window.player.create(b, { args: { response } })
+              window.player.create(b, { args: { response } })
             })(response, document.querySelector("#player"))
                             
         </script>
+      {% endif %}
         <yo-app>
             <app-masthead slot="header">
                 <div slot="search-input">

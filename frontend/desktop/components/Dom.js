@@ -2,9 +2,9 @@ import {
     LitElement,
     html,
     css
-} from //"lit-element";
-//import"../styles.css";
-  "https://cdn.jsdelivr.net/npm/lit-element/+esm?modules";
+} from "lit-element";
+import"../styles.css";
+  //"https://cdn.jsdelivr.net/npm/lit-element/+esm?modules";
 
 export function register(a, b) {
     class G extends a {
@@ -58,6 +58,12 @@ class Element extends LitElement {
     createRenderRoot() {
         return this;
     }
+    listen(element, event, fnNameOrFn){
+      const fn = typeof fnNameOrFn == "string" ? this[fnNameOrFn] : fnNameOrFn
+      element.addEventListener(event, (event)=>{
+        fn.apply(this, [event])
+      })
+    }
 }
 export { Element, css, html };
 
@@ -95,4 +101,5 @@ export const Resize = class {
         this._resizeObserver.disconnect();
         this.isAttached = false;
     }
+    
 };

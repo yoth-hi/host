@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler
 from os.path import join, exists, isfile
 from urllib.parse import urlparse, unquote
 from jinja2 import Template
-from .controller import renderContextPage
+from .controller import renderContextPage, isPageHtml, isPageApi
 import os
 import brotli
 
@@ -13,7 +13,7 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
         path = unquote(parsed_path.path)
-        if path == "/":
+        if isPageHtml(path):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Content-Encoding', 'br')
@@ -24,6 +24,8 @@ class handler(BaseHTTPRequestHandler):
                 render = template.render(context)
                 compressed_content = brotli.compress(render.encode('utf-8'), quality=compression_quelity)
                 self.wfile.write(compressed_content)
+        elif isPageApi(path):
+            self.send_header('Content-type', 'text/plain')
         else:
             self.serve_static(path)
         return
