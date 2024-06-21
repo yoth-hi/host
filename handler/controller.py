@@ -1,0 +1,41 @@
+import json
+def renderContextPage(parsed_path, self_):
+  title = "Yoth"
+  host = self_.headers.get('Host')
+  data = None
+  context = {};
+  path = parsed_path.path
+  context["pageId"] = getPageIdByPath(path)
+  istv = context["pageId"] == "LAYOUT_TV"
+  isembed = context["pageId"] == "EMBED"
+  context["istv"] = istv
+  context["path"] = path
+  context["host"] = host
+  if not istv or not isembed:
+    data = {"data":1}
+  
+  context["title"] = title
+  context["data"] = toTextData(data)
+  
+  context["isdev"] = host == "localhost:8080"
+  context["static_app"] = "/s/desktop/";
+  if(not context["isdev"]):
+    context["static_app"] = context["static_app"] + "jsbin/"
+  print(path, context)
+  return context;
+
+def getPageIdByPath(path):
+  _id = "";
+  if(path.startswith('/')):
+    path = path[1:]
+  if(path == ""):
+    _id = "FEED_HOME"
+  elif(path == "tv"):
+    _id = "LAYOUT_TV"
+  print(path)
+  return _id
+def toTextData(dataJson):
+  text = None;
+  if dataJson:
+    text = json.dumps(dataJson)
+  return text
