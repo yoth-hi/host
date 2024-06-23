@@ -4,6 +4,7 @@ from urllib.parse import urlparse, unquote
 from jinja2 import Template
 from .controller import renderContextPage, isPageHtml, isPageApi
 import os
+import re
 import brotli
 
 compression_quelity = 11
@@ -20,7 +21,7 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             with open(join(current_directory, 'frontend', 'desktop', 'index.html'), 'rb') as f:
                 context = renderContextPage(parsed_path, self);
-                template = Template(f.read().decode('utf-8'));
+                template = Template(re.sub(r'\n| {2,}', ' ', f.read().decode('utf-8')));
                 render = template.render(context)
                 compressed_content = brotli.compress(render.encode('utf-8'), quality=compression_quelity)
                 self.wfile.write(compressed_content)
