@@ -33,7 +33,7 @@ def renderContextPage(parsed_path, self_):
     context["static_app"] = "/s/mobile/"
   if(not context["isdev"]):
     context["static_app"] = context["static_app"] + "jsbin/"
-  print(path, context)
+  #print(path, context)
   return context;
 
 def getPageIdByPath(path):

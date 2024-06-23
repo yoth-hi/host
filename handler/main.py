@@ -5,11 +5,13 @@ from jinja2 import Template
 from .controller import renderContextPage, isPageHtml, isPageApi
 import os
 import re
+import random
 import brotli
 
-compression_quelity = 11
+
+
+compression_quelity = random.randint(0, 10)  # Generates a random integer between 0 and 10 (inclusive)
 current_directory = os.getcwd()
-print(f"> pwd\n {current_directory}")
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_path = urlparse(self.path)
