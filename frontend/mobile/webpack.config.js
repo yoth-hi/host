@@ -152,7 +152,7 @@ console.log(r)
                 filename: "index.html"
             }),
             new MiniCssExtractPlugin({
-                filename: "./player.css"
+                filename: "./styles.css"
             })
         ],
         optimization: {
