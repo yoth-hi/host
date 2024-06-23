@@ -20,6 +20,7 @@ class handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Content-Encoding', 'br')
+            self.send_header('compressed', f"{compressed_content}")
             self.end_headers()
             with open(join(current_directory, 'frontend', 'desktop', 'index.html'), 'rb') as f:
                 context = renderContextPage(parsed_path, self);
