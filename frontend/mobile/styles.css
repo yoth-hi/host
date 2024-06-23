@@ -35,4 +35,15 @@ app-header > .background {
     position: absolute;
     height: 40px;
     opacity: 1;
+    z-index: -1;
+}
+app-header > .contenter[search] .end,
+app-header > .contenter[search] .start {
+    display: none;
+}
+app-header > .contenter app-searchbar {
+  display: none;
+}
+app-header > .contenter[search] app-searchbar {
+  display: block;
 }

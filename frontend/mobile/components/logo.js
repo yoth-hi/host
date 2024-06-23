@@ -1,6 +1,6 @@
 import { Element, r } from "../Element.js";
 class Logo extends Element {
-    constructor({_isLink}) {
+    constructor({_isLink, _scope }) {
         super([
             {
                 _tag: _isLink ? "a" : "div",

@@ -63,12 +63,13 @@ const setPreValue = function (scope, element, type, value) {
 export class Element extends Disposable {
     _dynamicValue = {};
     _elements = {};
+    _refs = {};
     constructor(options) {
         super();
         this.element = this._createElement(options);
     }
     _createElement(
-        { _tag, _childs, _props,_attrs, _className, _classList, _content },
+        { _tag, _childs, _ref,_props,_attrs, _className, _classList, _content },
         isSvg
     ) {
         isSvg ??= _tag === "svg";
@@ -128,7 +129,13 @@ export class Element extends Disposable {
             }
         }
         _props&&(element._props = _props)
+        if(_ref){
+          this._refs[_ref] = [this,element]
+        }
         return element;
+    }
+    _getRef(ref){
+      return this._refs[ref]
     }
     _getElementByClass(class_) {
         return this._elements[class_];
