@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ title }}</title>
         <script src="{{static_app}}{% if istv %}web-tv-{% endif %}app.js" {% if isdev %}type="module" {% endif %}charset="utf-8"></script>
-        {% if isdev or istv %}<link href="{{static_app}}styles.css" rel="stylesheet">{% endif %}
+        {% if isdev or istv or isMobile %}<link href="{{static_app}}styles.css" rel="stylesheet">{% endif %}
         <script src="/s/player/jsbin/en/main.js"></script>
         <link href="/s/player/jsbin/player.css" rel="stylesheet">
     </head>
