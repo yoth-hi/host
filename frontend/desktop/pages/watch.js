@@ -6,25 +6,30 @@ const getPlayer = function(){
     resolve(element)
   });
 }
-import{ getEventNameFullScreenChange, getFullScreenElement}from"../../player/src/utils/utils.js"
+import{ ROOR_ELEMENT_ID }from"../components/keys.js"
+import{ getEventNameFullScreenChange, getFullScreenElement, stote }from"../../player/src/utils/utils.js"
 class PageManager extends Element {
     constructor() {
         super();
         this.pageNameToElement_ = new Map();
         this.pageId = "watch";
+        this.rootHost_ = stote.get(ROOR_ELEMENT_ID)
         this._resize = new Resize(this, this.onResizeElement)
+        this.listen(document,"scroll", "onScroll")
     }
     static properties = {
         data: { type: Object },
         isRowMode: { type: Boolean },
-        isFullscreen: { type: Boolean },
+        isFullscreen: { type: Boolean, reflect: true },
         isTopPlayer: { type: Boolean },
+        isActive: { type: Boolean },
     };
     render() {
         return html`
-        <div id="player-band"
+        <div id="full-bleed-container"
          ?hidden="${!this.isTopPlayer}"
-        ></div>
+        >
+        </div>
         <div id="column">
           <div class="primary">
             <div id="player-contenter">
@@ -54,6 +59,7 @@ class PageManager extends Element {
     static get observers() {
         return [
           "_onChengeData(data)",
+          "onActiveChenge(isActive,isFullscreen)",
           "updatePositionPlayer(isFullscreen,isThander)"
         ];
     }
@@ -64,7 +70,7 @@ class PageManager extends Element {
       })
     }
     firstUpdated(){
-      this.listen(document.body, getEventNameFullScreenChange(document.body), "_onFullScreenUpdate")
+      this.listen(document.documentElement, getEventNameFullScreenChange(document.documentElement), "_onFullScreenUpdate")
       this._getPlayer()
       this.updatePositionPlayer()
       this.asyncStart()
@@ -76,15 +82,16 @@ class PageManager extends Element {
     }
     async updatePositionPlayer(){
       const playerContent = this.querySelector("#player-contenter")
-      const playerHead = this.querySelector("#player-band")
+      const playerHead = this.querySelector("#full-bleed-container")
       const player = this.querySelector("#player")
       const [ element, controller ] = await this._getPlayer()
       if(this.isTopPlayer = (this.isFullscreen || this.isThander)){
         playerHead.appendChild(player)
+        player.focus()
       } else {
         playerContent.appendChild(player)
-        
       }
+      this.rootHost_.hiddenMastHeader_(this.isFullscreen&&this.isActive, this.isFullscreen)
     }
     _onFullScreenUpdate(){
       const element = getFullScreenElement();
@@ -103,6 +110,17 @@ class PageManager extends Element {
       } else if(!this.isRowMode && offsetWidth < 1000){
         this.isRowMode = true
         contentRow.appendChild(secondary)
+      }
+    }
+    onActiveChenge(a){
+      this.rootHost_.hiddenMastHeader_(this.isFullscreen&&a, this.isFullscreen)
+    }
+    onScroll(){
+      const { scrollTop } = document.documentElement
+      if(this.isActive){
+        if(this.isFullscreen){
+          this.rootHost_.hiddenMastHeader_(this.isFullscreen&&(scrollTop < 56/2), this.isFullscreen)
+        }
       }
     }
 }

@@ -22,14 +22,14 @@ export const init = class extends Disposable {
     constructor(player) {
         super();
         this._player = player;
-    }
-    _init() {
         if (this._player._getPlayerConfig()._isPreview) {
             this._chrome = new Chrome(this._player);
         } else {
             this._chrome = new ChromeContructor(this._player);
         }
         CreateDisposeCallback(this, this._chrome);
+    }
+    _init() {
         this._chrome._init();
     }
 };
@@ -39,6 +39,9 @@ class Chrome extends Disposable {
     constructor(player) {
         super();
         this._api = player;
+        this._placeholder  = new Placeholder(this._api, this)
+        CreateDisposeCallback(this, this._placeholder);
+        appendChildInTemplate(this._api, this._placeholder.element, 1);
         
         this._resizeObserver = new ResizeObserver((a)=>this._resize(a))
         this._resizeObserver.observe(this._api._getRootNode())
@@ -77,6 +80,7 @@ class ChromeContructor extends Chrome {
         CreateDisposeCallback(this, this._T);
     }
 }
+import Placeholder from "../placeholder.js"
 class IY extends Disposable {
     constructor(chrome) {
       super()
@@ -93,8 +97,9 @@ class IY extends Disposable {
                 }
             ]
         });
+
         CreateDisposeCallback(this, this._chromeBottom);
-        appendChildInTemplate(this._chrome._api, this._chromeBottom.element, 1);
+        appendChildInTemplate(this._chrome._api, this._chromeBottom.element, 2);
         this._chromeControls = this._chromeBottom.element.children[0];
         
         const left = new Element({ _tag:"div", _className:"app-left-controls" })

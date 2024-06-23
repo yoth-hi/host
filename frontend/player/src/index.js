@@ -85,8 +85,11 @@ export default class Player extends Disposable {
                 this._updateFullscreen();
             });
         }
-        this._chrome._init();
         this._resize();
+        this._onChangePresentingPlayerStateChange(0)
+    }
+    _initChrome(){
+        this._chrome._init();
     }
     _updateFullscreen() {
         const is = getFullScreenElement(false);
@@ -99,7 +102,7 @@ export default class Player extends Disposable {
         return this._mediaElement._playVideo();
     }
     _getElementFullscreen(){
-      return false ? this._getRootNode() : document.body 
+      return false ? this._getRootNode() : document.documentElement
     }
     _resize(){
       this._template._resize()
@@ -119,9 +122,10 @@ export default class Player extends Disposable {
     _onChangePresentingPlayerStateChange(a) {
         3 !== this.getPresentingPlayerType() &&
             this._dispatch("presentingplayerstatechange", a);
+            this._1 = a
     }
     getPresentingPlayerType() {
-        return 1;
+        return this._1;
     }
     _isFullscreen() {
         return this._visibility._isFullscreen();

@@ -54,17 +54,18 @@ export default class extends Dom {
                         "Interromper reprodu\u00e7\u00e3o ao vivo"
                 });
         }
-        if (state === 3) {
-            this._isS = true;
-            this._update({
-                title,
-                icon: getSwitchIconPlay(state)
-            });
-        } else {
-            this._update({ title });
-            Anime(this, this.element, getSwitchIconPlay(state), this._isS);
-            this._isS = false;
-        }
+        if (getSwitchIconPlay(state) && state !== 0)
+            if (state === 3) {
+                this._isS = true;
+                this._update({
+                    title,
+                    icon: getSwitchIconPlay(state)
+                });
+            } else {
+                this._update({ title });
+                Anime(this, this.element, getSwitchIconPlay(state), this._isS);
+                this._isS = false;
+            }
     }
 }
 const xU = function (sc, value, key) {

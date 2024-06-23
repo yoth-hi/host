@@ -3,8 +3,8 @@ import {
     html,
     css
 } from "lit-element";
+ // "https://cdn.jsdelivr.net/npm/lit-element/+esm?modules";
 import"../styles.css";
-  //"https://cdn.jsdelivr.net/npm/lit-element/+esm?modules";
 
 export function register(a, b) {
     class G extends a {

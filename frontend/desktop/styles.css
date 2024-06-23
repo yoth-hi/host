@@ -38,6 +38,9 @@ yo-app {
     transform: translateY(0);
     transition: transform .3s ease;
 }
+[hiddenHeader] #masthead-container {
+    transform: translateY(-100%);
+}
 
 app-masthead > #container {
     height: 56px;
@@ -169,6 +172,9 @@ page-manager {
   margin-top: 56px;
   --app-watch-space-margin: 16px;
 }
+[noMarginTop] page-manager {
+  margin-top: 0px!important;
+}
 /* [PAGES:watch] */
 app-watch {
   display:block;
@@ -219,8 +225,29 @@ app-watch > #column #description {
 app-watch > #column > #content-row {
   min-height: 10px;
 }
-app-watch > #player-band {
-  width: 100%;
-  height: 100vh;
-  max-height: calc(100vh - 300px);
+app-watch > #full-bleed-container:not([hidden]) {
+    display: flex;
+    flex-direction: row;
+}
+app-watch > #full-bleed-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 480px;
+    overflow-x: clip;
+    background: #000;
+}
+app-watch > #full-bleed-container[isFullscreen] {
+    position: relative;
+    width: 100%;
+    height: 56.25vw!important;
+    max-height: calc(100vh - 169px)!important;
+    min-height: 480px;
+    overflow-x: clip;
+    background: #000;
+}
+app-watch > #full-bleed-container #player {
+    position: absolute;
+    inset:0;
 }

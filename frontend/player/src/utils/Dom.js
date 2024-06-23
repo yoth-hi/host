@@ -68,10 +68,10 @@ export class Element extends Disposable {
         this.element = this._createElement(options);
     }
     _createElement(
-        { _tag, _childs, _attrs, _className, _classList, _content },
-        isSvg = _tag === "svg"
+        { _tag, _childs, _props,_attrs, _className, _classList, _content },
+        isSvg
     ) {
-
+        isSvg ??= _tag === "svg";
         let element;
         if (isSvg) {
             element = document.createElementNS(
@@ -103,8 +103,12 @@ export class Element extends Disposable {
             for (let i = 0; i < _childs.length; i++) {
                 const _child = _childs[i];
                 if (typeof _child == "string") {
+                    if (registerDymamicValue(this, element, "child", _child)) {
+                        setPreValue(this, element, "child", _child);
+                    }
                 } else {
-                    const element_ = this._createElement(_child, isSvg);
+                    const h = isSvg ?? _childs._tag == "svg";
+                    const element_ = this._createElement(_child, h);
                     element.appendChild(element_);
                 }
             }
@@ -123,6 +127,7 @@ export class Element extends Disposable {
                 );
             }
         }
+        _props&&(element._props = _props)
         return element;
     }
     _getElementByClass(class_) {
@@ -143,11 +148,11 @@ export class Element extends Disposable {
             }
         });
     }
-    _update(obj){
-      const keys = Object.keys(obj);
-      keys.forEach((key)=>{
-        this._updateValue(key, obj[key])
-      })
+    _update(obj) {
+        const keys = Object.keys(obj);
+        keys.forEach(key => {
+            this._updateValue(key, obj[key]);
+        });
     }
     _updateValue(key, value) {
         const isD = this._dynamicValue["{{" + key + "}}"];
@@ -159,6 +164,12 @@ export class Element extends Disposable {
 export class Dom extends Element {
     constructor(options) {
         super(options);
+    }
+    _hide() {
+        this.element.style.display = "none";
+    }
+    _show() {
+        this.element.style.display = "";
     }
 }
 export const appendChildInTemplate = function (api, child, index) {

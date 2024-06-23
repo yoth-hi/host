@@ -14,8 +14,6 @@
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     touch-action: manipulation;
-    
-    min-height: 40vh;
 }
 .html5-video-player:not(.transparent) {
     background: #000;
@@ -152,4 +150,36 @@
     font-family: inherit;
     cursor: default;
     line-height: inherit;
+}
+.app-placeholder-img {
+  position: absolute;
+  inset:0;
+  transition: .2s opacity;
+  background-repeat: no-repeat;
+  background-size:  cover;
+  background-position: center;
+}
+.app-placeholder-hidden{
+  pointer-events: none;
+}
+.app-placeholder-hidden .app-placeholder-img{
+  opacity: 0;
+}
+.app-placeholder-show .app-placeholder-img{
+  opacity: 1;
+}
+
+.app-placeholder-hidden .app-placeholder-icon{
+  display: none!important;
+}
+.app-placeholder-icon {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: 50%;
+    transform: scale(.0) translate(-50%, -50%);
+    right: 50%;
+    z-index: 22;
+    border-radius: 8px;
+    background: #000e;
 }

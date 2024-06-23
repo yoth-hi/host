@@ -4,15 +4,18 @@
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ title }}</title>
-        <script src="{{static_app}}app.js" type="module" charset="utf-8"></script>
-        {% if isdev %}<link href="{{static_app}}styles.css" rel="stylesheet">{% endif %}
+        <script src="{{static_app}}{% if istv %}web-tv-{% endif %}app.js" {% if isdev %}type="module" {% endif %}charset="utf-8"></script>
+        {% if isdev or istv %}<link href="{{static_app}}styles.css" rel="stylesheet">{% endif %}
         <script src="/s/player/jsbin/en/main.js"></script>
         <link href="/s/player/jsbin/player.css" rel="stylesheet">
     </head>
     <body>
+      {% if istv %}
+        <div id="container">Tv Elements</div>
+      {% endif %}
+      {% if iswatch %}
       <style>body>#player{position:relative;z-index:500;max-width:1080px;margin:57px auto;padding-bottom:17%;width:95vh}body>#player>div{position:absolute;inset:0}</style>
       <div id="player"></div>
-      {% if iswatch %}
         <script>
             const response = {
                             videoDetails: {
@@ -71,6 +74,12 @@
                             
         </script>
       {% endif %}
+      {% if isMobile %}
+      <yo-app id="app">
+        <app-header></app-header>
+      </yo-app>
+      {% endif %}
+      {% if not istv and not isMobile %}
         <yo-app>
             <app-masthead slot="header">
                 <div slot="search-input">
@@ -88,6 +97,7 @@
                 </div>
             </app-masthead>
         </yo-app>
-        {% if data %}<script>var data={{data}};</script>{% endif %}
+      {% endif %}
+      {% if data %}<script>var data={{data}};</script>{% endif %}
     </body>
 </html>

@@ -37,8 +37,12 @@ class PageManager extends Element {
       if(this.currentPage===element){
         this.currentPage?.removeAttribute("hidden");
       } else {
-        this.currentPage?.setAttribute("hidden","");
+        if(this.currentPage){
+          this.currentPage.setAttribute("hidden","");
+          this.currentPage.isActive = false
+        }
         this.currentPage = element;
+        this.currentPage.isActive = true
       }
       this.appendPage_(element)
     }

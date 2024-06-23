@@ -1,10 +1,15 @@
 import json
+from urllib.parse import parse_qs
+
+
 def renderContextPage(parsed_path, self_):
   title = "Yoth"
   host = self_.headers.get('Host')
   data = None
   context = {};
   path = parsed_path.path
+  query = parseQuery(parsed_path.query)
+  isMobile = query.get("app") == "mobile"
   context["pageId"] = getPageIdByPath(path)
   istv = context["pageId"] == "LAYOUT_TV"
   isembed = context["pageId"] == "EMBED"
@@ -17,10 +22,15 @@ def renderContextPage(parsed_path, self_):
     data = {"data":1}
   
   context["title"] = title
+  context["isMobile"] = isMobile
   context["data"] = toTextData(data)
   
   context["isdev"] = host == "localhost:8080"
   context["static_app"] = "/s/desktop/";
+  if(istv):
+    context["static_app"] = "/s/tv/"
+  if(not istv and isMobile):
+    context["static_app"] = "/s/mobile/"
   if(not context["isdev"]):
     context["static_app"] = context["static_app"] + "jsbin/"
   print(path, context)
@@ -50,3 +60,6 @@ def isPageApi(path):
     return False
   path = path[3:]
   return path == "/watchtime"
+def parseQuery(query_string = ""):
+  query_params = parse_qs(query_string)
+  return {key: value[0] for key, value in query_params.items()}

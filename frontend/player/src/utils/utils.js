@@ -1,3 +1,4 @@
+export const stote = new Map;
 export const removeChildAll = function (parent) {
     for (var el; (el = parent.firstChild); ) parent.removeChild(el);
 };
