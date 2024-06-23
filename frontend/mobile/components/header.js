@@ -34,6 +34,7 @@ class Header extends Element {
                     },
                     {
                         _tag: "app-searchbar",
+                        _ref: "_searchbar",
                         _props: {
                             get _scope() {
                                 return __this;
@@ -73,6 +74,12 @@ class Header extends Element {
     set _isOpendedSearchBar(v) {
         const search = v ? "-" : undefined;
         this._update({ search });
+        v ? this._boxAuto._show() : this._boxAuto._hide();
+    }
+    get _boxAuto(){
+        const [f,g , cs,...s] = this._getRef("_searchbar");
+        return cs._boxAuto;
+      
     }
 }
 r(Header, "app-header");

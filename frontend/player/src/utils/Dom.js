@@ -135,7 +135,10 @@ export class Element extends Disposable {
         return element;
     }
     _getRef(ref){
-      return this._refs[ref]
+      const j = this._refs[ref] 
+      if(j&&(j.length>1)){
+        return j
+      }
     }
     _getElementByClass(class_) {
         return this._elements[class_];

@@ -45,5 +45,59 @@ app-header > .contenter app-searchbar {
   display: none;
 }
 app-header > .contenter[search] app-searchbar {
-  display: block;
+  display: flex;
+}
+app-searchbar {
+  align-items: center;
+  width: 100%;
+}
+app-searchbar .input-content {
+  display: flex;
+  align-items: center;
+  height: 32px;
+  background: #8882;
+  padding: 0 8px;
+  border-radius:40px;
+  flex:1;
+}
+app-searchbar input {
+  width: 100%;
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  margin-right: 6px;
+  outline: none;
+}
+app-searchbar .back-button button {
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+}
+app-searchbar .back-button {
+  width: 32px;
+  height: 32px;
+  margin-right: 5px;
+}
+body .box-auto-complete {
+  position: absolute;
+  top:40px;
+  left: 0;
+  right: 0;
+  overflow: scroll;
+  bottom: 0;
+}
+body .box-auto-complete .bac-item {
+  height: 40px;
+  align-items: center;
+  display:flex;
+  cursor: pointer;
+  padding: 0px 14px;
+}
+body .box-auto-complete .bac-item-lf {
+  width: 40px;
+  height: 40px;
+}
+body .box-auto-complete .bac-item-rt {
+  width: 40px;
+  height: 40px;
 }

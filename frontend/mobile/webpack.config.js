@@ -34,6 +34,8 @@ class SortPlugin {
                    let mmm = f(jjj++)
                    if(
                      mmm ==="do"||
+                     mmm ==="in"||
+                     mmm ==="of"||
                      mmm ==="if"
                    ){
                      mmm = f(jjj++)
