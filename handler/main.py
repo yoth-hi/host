@@ -10,7 +10,7 @@ import brotli
 
 
 
-compression_quelity = random.randint(0, 10)  # Generates a random integer between 0 and 10 (inclusive)
+compression_quelity = random.randint(0, 5)
 current_directory = os.getcwd()
 class handler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -20,7 +20,7 @@ class handler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.send_header('Content-Encoding', 'br')
-            self.send_header('compressed', f"{compressed_content}")
+            self.send_header('compressed', f"{compression_quelity}")
             self.end_headers()
             with open(join(current_directory, 'frontend', 'desktop', 'index.html'), 'rb') as f:
                 context = renderContextPage(parsed_path, self);
